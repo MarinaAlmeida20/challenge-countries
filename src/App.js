@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-// import CountryData from "./data/countriesAll.json";
 import "./App.css";
 
 function App() {
