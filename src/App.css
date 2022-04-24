@@ -8,12 +8,49 @@ html {
   background-color: #ecf9ff;
 }
 
+.App-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 9%;
+}
+
+.title-header {
+  font-weight: 600;
+}
+
+.main-content {
+  width: 1390px;
+  margin: auto;
+}
+
+.searchAndFilter {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.form-control {
+  width: 50%;
+  padding: 1.5rem 0.75rem;
+}
+
+.dropdown-toggle {
+  padding: 0.8rem 1.7rem;
+  font-size: 1rem;
+  background-color: white;
+  color: black;
+}
+
 .list {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: stretch;
+  padding: 0;
 }
 
 .made_by {
