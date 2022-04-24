@@ -8,52 +8,49 @@ function App() {
     fetch(`https://restcountries.com/v2/all`)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         setCountry(data);
       });
   }, []);
 
   return (
-    <>
-      <div>
-        {country &&
-          country.map((card, index) => {
-            const { flag, name, population, region, capital } = card;
+    <ul className="list">
+      {country &&
+        country.map((card, index) => {
+          const { flag, name, population, region, capital } = card;
 
-            let populationNumber = population
-              .toString()
-              .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
+          const populationNumber = population
+            .toString()
+            .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
 
-            return (
-              <div className="main">
-                <div className="cards" key={index}>
-                  <div className="cards_item">
-                    <div className="card">
-                      <img src={flag} alt="flag" />
-                      <div className="card_container">
-                        <h4>{name}</h4>
-                        <p>
-                          <b>Population:</b> {populationNumber}
-                        </p>
-                        <p>
-                          <b>Region:</b> {region}
-                        </p>
-                        <p>
-                          <b>Capital:</b> {capital}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+          return (
+            <li
+              key={index}
+              className="card"
+              style={{ width: "18rem", margin: "10px 0 " }}
+            >
+              <img className="card-img-top" src={flag} alt={name} />
+              <div className="card-body">
+                <h4 className="card-title">{name}</h4>
+                <p className="card-text">
+                  <b>Population:</b> {populationNumber}
+                </p>
+                <p className="card-text">
+                  <b>Region:</b> {region}
+                </p>
+                <p className="card-text">
+                  <b>Capital:</b> {capital}
+                </p>
               </div>
-            );
-          })}
-      </div>
-      <footer>
-        <h3 className="made_by">Made with ♡ by Marina Almeida 2022</h3>
-      </footer>
-    </>
+            </li>
+          );
+        })}
+    </ul>
   );
 }
+
+//  <footer>
+//    <h3 className="made_by">Made with ♡ by Marina Almeida 2022</h3>
+//  </footer>;
 
 export default App;
