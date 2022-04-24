@@ -14,43 +14,45 @@ function App() {
   }, []);
 
   return (
-    <ul className="list">
-      {country &&
-        country.map((card, index) => {
-          const { flag, name, population, region, capital } = card;
+    <>
+      <ul className="list">
+        {country &&
+          country.map((card, index) => {
+            const { flag, name, population, region, capital } = card;
 
-          const populationNumber = population
-            .toString()
-            .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
+            const populationNumber = population
+              .toString()
+              .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
 
-          return (
-            <li
-              key={index}
-              className="card"
-              style={{ width: "18rem", margin: "10px 0 " }}
-            >
-              <img className="card-img-top" src={flag} alt={name} />
-              <div className="card-body">
-                <h4 className="card-title">{name}</h4>
-                <p className="card-text">
-                  <b>Population:</b> {populationNumber}
-                </p>
-                <p className="card-text">
-                  <b>Region:</b> {region}
-                </p>
-                <p className="card-text">
-                  <b>Capital:</b> {capital}
-                </p>
-              </div>
-            </li>
-          );
-        })}
-    </ul>
+            return (
+              <li
+                key={index}
+                className="card"
+                style={{ width: "18rem", margin: "10px 0 " }}
+              >
+                <img className="card-img-top" src={flag} alt={name} />
+                <div className="card-body">
+                  <h4 className="card-title">{name}</h4>
+                  <p className="card-text">
+                    <b>Population:</b> {populationNumber}
+                  </p>
+                  <p className="card-text">
+                    <b>Region:</b> {region}
+                  </p>
+                  <p className="card-text">
+                    <b>Capital:</b> {capital}
+                  </p>
+                </div>
+              </li>
+            );
+          })}
+      </ul>
+      <footer>
+        <h3 className="made_by">Made with ♡ by Marina Almeida 2022</h3>
+      </footer>
+      ;
+    </>
   );
 }
-
-//  <footer>
-//    <h3 className="made_by">Made with ♡ by Marina Almeida 2022</h3>
-//  </footer>;
 
 export default App;
