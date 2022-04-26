@@ -1,115 +1,55 @@
 import React, { useState, useEffect } from "react";
+
+import countriesData from "./data/countries.json";
 import "./App.css";
 
 function App() {
-  const [country, setCountry] = useState(null);
-  const [toggle, setToggle] = useState("all");
+  const regions = [...new Set(countriesData.map((country) => country.region))];
+  const [countries, setCountries] = useState(countriesData);
+  const [countriesFilter, setCountriesFilter] = useState("");
+  const [regionsFilter, setRegionsFilter] = useState("Filter by Region");
+
+  // console.log(countriesData);
 
   useEffect(() => {
-    fetch(`https://restcountries.com/v2/all`)
-      .then((res) => res.json())
-      .then((data) => {
-        // console.log(data);
-        setCountry(data);
-      });
-  }, []);
+    // console.log(countriesFilter);
+    setCountries(
+      countriesData.filter(
+        (country) =>
+          (regionsFilter === "Filter by Region" ||
+            country.region
+              .toLocaleLowerCase()
+              .includes(regionsFilter.toLocaleLowerCase())) &&
+          (countriesFilter === "" ||
+            country.name
+              .toLocaleLowerCase()
+              .includes(countriesFilter.toLocaleLowerCase()))
+      )
+    );
+  }, [regionsFilter, countriesFilter]);
 
   return (
     <>
       <header className="App-header">
         <h2 className="title-header">Where in the world?</h2>
-        <h5>Dark Mode</h5>
       </header>
       <div className="main-content">
         <section className="searchAndFilter">
           <input
             className="form-control"
-            type="text"
+            type="search"
             placeholder="Search for a country"
+            onChange={(e) => setCountriesFilter(e.target.value)}
           />
-          <div class="dropdown">
-            <button
-              className="btn btn-lg btn-secondary dropdown-toggle"
-              type="button"
-              id="dropdownMenu2"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-              onClick={() => setToggle("")}
-            >
-              Filter by Region
-            </button>
-            <div className="dropdown-menu" aria-labelledby="dropdownMenu2">
-              <button
-                className="dropdown-item"
-                type="button"
-                onClick={() => setToggle("africa")}
-              >
-                Africa
-              </button>
-              <button
-                className="dropdown-item"
-                type="button"
-                onClick={() => setToggle("america")}
-              >
-                America
-              </button>
-              <button
-                className="dropdown-item"
-                type="button"
-                onClick={() => setToggle("asia")}
-              >
-                Asia
-              </button>
-              <button
-                className="dropdown-item"
-                type="button"
-                onClick={() => setToggle("europe")}
-              >
-                Europe
-              </button>
-              <button
-                className="dropdown-item"
-                type="button"
-                onClick={() => setToggle("oceania")}
-              >
-                Oceania
-              </button>
-            </div>
-          </div>
+
+          <select onChange={(e) => setRegionsFilter(e.target.value)}>
+            <option>Filter by Region</option>
+            {regions.map((region) => (
+              <option>{region}</option>
+            ))}
+          </select>
         </section>
-        <ul className="list">
-          {country &&
-            country.map((card, index) => {
-              const { flag, name, population, region, capital } = card;
-
-              const populationNumber = population
-                .toString()
-                .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
-
-              return (
-                <li
-                  key={index}
-                  className="card"
-                  style={{ width: "18rem", margin: "10px 0 " }}
-                >
-                  <img className="card-img-top" src={flag} alt={name} />
-                  <div className="card-body">
-                    <h4 className="card-title">{name}</h4>
-                    <p className="card-text">
-                      <b>Population:</b> {populationNumber}
-                    </p>
-                    <p className="card-text">
-                      <b>Region:</b> {region}
-                    </p>
-                    <p className="card-text">
-                      <b>Capital:</b> {capital}
-                    </p>
-                  </div>
-                </li>
-              );
-            })}
-        </ul>
+        <Content content={countries} />
         <footer>
           <h3 className="made_by">Made with ♡ by Marina Almeida 2022</h3>
         </footer>
@@ -117,5 +57,42 @@ function App() {
     </>
   );
 }
+
+const Content = ({ content }) => {
+  return (
+    <ul className="list">
+      {content &&
+        content.map((card, index) => {
+          const { flag, name, population, region, capital } = card;
+
+          const populationNumber = population
+            .toString()
+            .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
+
+          return (
+            <li
+              key={index}
+              className="card"
+              style={{ width: "18rem", margin: "10px 0 " }}
+            >
+              <img className="card-img-top" src={flag} alt={name} />
+              <div className="card-body">
+                <h4 className="card-title">{name}</h4>
+                <p className="card-text">
+                  <b>Population:</b> {populationNumber}
+                </p>
+                <p className="card-text">
+                  <b>Region:</b> {region}
+                </p>
+                <p className="card-text">
+                  <b>Capital:</b> {capital}
+                </p>
+              </div>
+            </li>
+          );
+        })}
+    </ul>
+  );
+};
 
 export default App;
